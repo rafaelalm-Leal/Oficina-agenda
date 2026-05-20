@@ -1,0 +1,528 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --preto: #0d0d0d;
+    --cinza-escuro: #1a1a1a;
+    --cinza-medio: #2a2a2a;
+    --cinza-claro: #3a3a3a;
+    --branco: #f0f0f0;
+    --branco-suave: #c0c0c0;
+    --laranja: #ff6b00;
+    --laranja-escuro: #cc5500;
+    --verde: #28a745;
+    --amarelo: #ffc107;
+    --vermelho: #dc3545;
+    --azul: #007bff;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--preto);
+    color: var(--branco);
+    min-height: 100vh;
+    padding-bottom: 80px;
+}
+
+/* ── HEADER ── */
+.header {
+    background-color: var(--cinza-escuro);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--laranja);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header h1 {
+    font-size: 1.2rem;
+    color: var(--laranja);
+    font-weight: 700;
+}
+
+.header span {
+    font-size: 0.8rem;
+    color: var(--branco-suave);
+}
+
+/* ── NAVEGAÇÃO INFERIOR ── */
+.nav-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--cinza-escuro);
+    border-top: 1px solid var(--cinza-claro);
+    display: flex;
+    z-index: 100;
+}
+
+.nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    text-decoration: none;
+    color: var(--branco-suave);
+    font-size: 0.7rem;
+    gap: 4px;
+    transition: color 0.2s;
+}
+
+.nav-item.ativo {
+    color: var(--laranja);
+}
+
+.nav-item span {
+    font-size: 1.4rem;
+}
+
+/* ── CONTAINER PRINCIPAL ── */
+.container {
+    padding: 16px;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+/* ── CARDS DO DASHBOARD ── */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.card-stat {
+    background-color: var(--cinza-escuro);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid var(--cinza-claro);
+}
+
+.card-stat .numero {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--laranja);
+}
+
+.card-stat .label {
+    font-size: 0.75rem;
+    color: var(--branco-suave);
+    margin-top: 4px;
+}
+
+/* ── BARRA DE SLOTS ── */
+.slots-container {
+    background-color: var(--cinza-escuro);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 1px solid var(--cinza-claro);
+}
+
+.slots-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 0.85rem;
+}
+
+.slots-barra {
+    display: flex;
+    gap: 8px;
+}
+
+.slot {
+    flex: 1;
+    height: 12px;
+    border-radius: 6px;
+    background-color: var(--cinza-claro);
+    transition: background-color 0.3s;
+}
+
+.slot.ocupado {
+    background-color: var(--laranja);
+}
+
+.slot.lotado {
+    background-color: var(--vermelho);
+}
+
+.alerta-lotado {
+    margin-top: 10px;
+    color: var(--vermelho);
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: none;
+}
+
+/* ── CARDS DE SERVIÇO ── */
+.secao-titulo {
+    font-size: 0.9rem;
+    color: var(--branco-suave);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.card-servico {
+    background-color: var(--cinza-escuro);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border-left: 4px solid var(--cinza-claro);
+    cursor: pointer;
+    transition: transform 0.2s;
+    text-decoration: none;
+    display: block;
+    color: var(--branco);
+}
+
+.card-servico:active {
+    transform: scale(0.98);
+}
+
+.card-servico.agendado {
+    border-left-color: var(--amarelo);
+}
+
+.card-servico.em_andamento {
+    border-left-color: var(--azul);
+}
+
+.card-servico.concluido {
+    border-left-color: var(--verde);
+}
+
+.card-servico.cancelado {
+    border-left-color: var(--vermelho);
+    opacity: 0.6;
+}
+
+.card-servico-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.card-nome {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.badge {
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.badge.agendado {
+    background-color: rgba(255, 193, 7, 0.2);
+    color: var(--amarelo);
+}
+
+.badge.em_andamento {
+    background-color: rgba(0, 123, 255, 0.2);
+    color: var(--azul);
+}
+
+.badge.concluido {
+    background-color: rgba(40, 167, 69, 0.2);
+    color: var(--verde);
+}
+
+.badge.cancelado {
+    background-color: rgba(220, 53, 69, 0.2);
+    color: var(--vermelho);
+}
+
+.card-servico-info {
+    font-size: 0.82rem;
+    color: var(--branco-suave);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+/* ── BOTÃO PRINCIPAL ── */
+.btn-primary {
+    background-color: var(--laranja);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s;
+}
+
+.btn-primary:active {
+    background-color: var(--laranja-escuro);
+}
+
+.btn-secondary {
+    background-color: var(--cinza-medio);
+    color: var(--branco);
+    border: 1px solid var(--cinza-claro);
+    border-radius: 12px;
+    padding: 14px 24px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s;
+}
+
+.btn-danger {
+    background-color: transparent;
+    color: var(--vermelho);
+    border: 1px solid var(--vermelho);
+    border-radius: 12px;
+    padding: 14px 24px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn-success {
+    background-color: var(--verde);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* ── FORMULÁRIOS ── */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--branco-suave);
+    margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    background-color: var(--cinza-medio);
+    border: 1px solid var(--cinza-claro);
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: var(--branco);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--laranja);
+}
+
+.form-group textarea {
+    resize: none;
+    height: 80px;
+}
+
+/* ── AUTOCOMPLETE ── */
+.autocomplete-lista {
+    background-color: var(--cinza-medio);
+    border: 1px solid var(--cinza-claro);
+    border-radius: 10px;
+    margin-top: 4px;
+    overflow: hidden;
+    display: none;
+}
+
+.autocomplete-item {
+    padding: 12px 14px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--cinza-claro);
+    transition: background-color 0.2s;
+}
+
+.autocomplete-item:last-child {
+    border-bottom: none;
+}
+
+.autocomplete-item:active {
+    background-color: var(--cinza-claro);
+}
+
+.autocomplete-item .telefone {
+    font-size: 0.78rem;
+    color: var(--branco-suave);
+}
+
+/* ── DETALHE DO SERVIÇO ── */
+.detalhe-info {
+    background-color: var(--cinza-escuro);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border: 1px solid var(--cinza-claro);
+}
+
+.detalhe-linha {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--cinza-claro);
+    font-size: 0.9rem;
+}
+
+.detalhe-linha:last-child {
+    border-bottom: none;
+}
+
+.detalhe-linha .campo {
+    color: var(--branco-suave);
+}
+
+.detalhe-linha .valor {
+    font-weight: 500;
+    text-align: right;
+}
+
+.botoes-acao {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* ── ESTADOS VAZIOS ── */
+.estado-vazio {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--branco-suave);
+}
+
+.estado-vazio .icone {
+    font-size: 3rem;
+    margin-bottom: 12px;
+}
+
+.estado-vazio p {
+    font-size: 0.9rem;
+}
+
+/* ── LOADING ── */
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: var(--branco-suave);
+    font-size: 0.9rem;
+}
+
+/* ── FILTROS ── */
+.filtros {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.filtro-btn {
+    background-color: var(--cinza-escuro);
+    border: 1px solid var(--cinza-claro);
+    border-radius: 20px;
+    padding: 6px 16px;
+    color: var(--branco-suave);
+    font-size: 0.8rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+.filtro-btn.ativo {
+    background-color: var(--laranja);
+    border-color: var(--laranja);
+    color: white;
+}
+
+/* ── MODAL ── */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 200;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.modal-overlay.aberto {
+    display: flex;
+}
+
+.modal {
+    background-color: var(--cinza-escuro);
+    border-radius: 20px 20px 0 0;
+    padding: 24px 20px;
+    width: 100%;
+    max-width: 480px;
+    border-top: 2px solid var(--laranja);
+}
+
+.modal h3 {
+    margin-bottom: 16px;
+    font-size: 1rem;
+}
+
+.modal .botoes-acao {
+    margin-top: 16px;
+}
+
+/* ── SELEÇÃO DE TIPOS DE SERVIÇO ── */
+.tipos-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tipo-item {
+    background-color: var(--cinza-medio);
+    border: 1px solid var(--cinza-claro);
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.tipo-item:active {
+    transform: scale(0.95);
+}
+
+.tipo-item.selecionado {
+    background-color: var(--laranja);
+    border-color: var(--laranja);
+    color: white;
+    font-weight: 600;
+}

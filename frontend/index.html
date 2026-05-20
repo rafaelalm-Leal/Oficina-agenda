@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oficina Agenda</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a1a1a">
+</head>
+<body>
+
+    <header class="header">
+        <h1>🔧 Oficina Agenda</h1>
+        <span id="data-hoje"></span>
+    </header>
+
+    <div class="container">
+
+        <!-- BARRA DE SLOTS -->
+        <div class="slots-container">
+            <div class="slots-header">
+                <span>Capacidade da oficina</span>
+                <span id="slots-texto">carregando...</span>
+            </div>
+            <div class="slots-barra" id="slots-barra"></div>
+            <p class="alerta-lotado" id="alerta-lotado">
+                ⚠️ Oficina lotada! Finalize um serviço antes de cadastrar outro.
+            </p>
+        </div>
+
+        <!-- CARDS DE ESTATÍSTICAS -->
+        <div class="dashboard-grid">
+            <div class="card-stat">
+                <div class="numero" id="num-agendados">-</div>
+                <div class="label">🟡 Agendados</div>
+            </div>
+            <div class="card-stat">
+                <div class="numero" id="num-andamento">-</div>
+                <div class="label">🔵 Em andamento</div>
+            </div>
+            <div class="card-stat">
+                <div class="numero" id="num-concluidos">-</div>
+                <div class="label">🟢 Concluídos</div>
+            </div>
+            <div class="card-stat">
+                <div class="numero" id="num-slots">-</div>
+                <div class="label">📋 Slots livres</div>
+            </div>
+        </div>
+
+        <!-- SERVIÇOS ATIVOS -->
+        <p class="secao-titulo">Serviços ativos</p>
+        <div id="lista-ativos">
+            <div class="loading">Carregando...</div>
+        </div>
+
+        <!-- BOTÃO NOVO SERVIÇO -->
+        <button class="btn-primary" onclick="window.location.href='novo-servico.html'">
+            + Novo Serviço
+        </button>
+
+    </div>
+
+    <!-- NAVEGAÇÃO INFERIOR -->
+    <nav class="nav-bottom">
+        <a href="index.html" class="nav-item ativo">
+            <span>🏠</span>
+            Início
+        </a>
+        <a href="servicos.html" class="nav-item">
+            <span>🔧</span>
+            Serviços
+        </a>
+        <a href="clientes.html" class="nav-item">
+            <span>👥</span>
+            Clientes
+        </a>
+    </nav>
+
+    <script src="js/config.js"></script>
+    <script src="js/dashboard.js"></script>
+
+</body>
+</html>

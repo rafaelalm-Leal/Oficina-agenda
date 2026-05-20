@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviços — Oficina Agenda</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <h1>🔧 Serviços</h1>
+    </header>
+
+    <div class="container">
+
+        <!-- FILTROS -->
+        <div class="filtros">
+            <button class="filtro-btn ativo" onclick="filtrar('todos', this)">Todos</button>
+            <button class="filtro-btn" onclick="filtrar('agendado', this)">🟡 Agendados</button>
+            <button class="filtro-btn" onclick="filtrar('em_andamento', this)">🔵 Em andamento</button>
+            <button class="filtro-btn" onclick="filtrar('concluido', this)">🟢 Concluídos</button>
+            <button class="filtro-btn" onclick="filtrar('cancelado', this)">🔴 Cancelados</button>
+        </div>
+
+        <!-- LISTA -->
+        <div id="lista-servicos">
+            <div class="loading">Carregando...</div>
+        </div>
+
+    </div>
+
+    <!-- NAVEGAÇÃO INFERIOR -->
+    <nav class="nav-bottom">
+        <a href="index.html" class="nav-item">
+            <span>🏠</span>
+            Início
+        </a>
+        <a href="servicos.html" class="nav-item ativo">
+            <span>🔧</span>
+            Serviços
+        </a>
+        <a href="clientes.html" class="nav-item">
+            <span>👥</span>
+            Clientes
+        </a>
+    </nav>
+
+    <script src="js/config.js"></script>
+    <script src="js/servicos.js"></script>
+
+</body>
+</html>

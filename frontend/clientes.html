@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes — Oficina Agenda</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <h1>👥 Clientes</h1>
+    </header>
+
+    <div class="container">
+
+        <!-- BUSCA -->
+        <div class="form-group">
+            <input
+                type="text"
+                id="busca-cliente"
+                placeholder="🔍 Buscar cliente por nome..."
+                oninput="buscarClientes(this.value)"
+            >
+        </div>
+
+        <!-- LISTA -->
+        <div id="lista-clientes">
+            <div class="loading">Carregando...</div>
+        </div>
+
+        <!-- BOTÃO NOVO CLIENTE -->
+        <button class="btn-primary" onclick="abrirModalNovoCliente()">
+            + Novo Cliente
+        </button>
+
+    </div>
+
+    <!-- MODAL NOVO/EDITAR CLIENTE -->
+    <div class="modal-overlay" id="modal-cliente">
+        <div class="modal">
+            <h3 id="modal-titulo">Novo Cliente</h3>
+            <input type="hidden" id="cliente-id">
+            <div class="form-group">
+                <label>Nome completo</label>
+                <input type="text" id="cliente-nome" placeholder="Ex: Carlos Silva">
+            </div>
+            <div class="form-group">
+                <label>Telefone</label>
+                <input type="tel" id="cliente-telefone" placeholder="Ex: 83999999999">
+            </div>
+            <div class="botoes-acao">
+                <button class="btn-primary" onclick="salvarCliente()">Salvar</button>
+                <button class="btn-secondary" onclick="fecharModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVEGAÇÃO INFERIOR -->
+    <nav class="nav-bottom">
+        <a href="index.html" class="nav-item">
+            <span>🏠</span>
+            Início
+        </a>
+        <a href="servicos.html" class="nav-item">
+            <span>🔧</span>
+            Serviços
+        </a>
+        <a href="clientes.html" class="nav-item ativo">
+            <span>👥</span>
+            Clientes
+        </a>
+    </nav>
+
+    <script src="js/config.js"></script>
+    <script src="js/clientes.js"></script>
+
+</body>
+</html>

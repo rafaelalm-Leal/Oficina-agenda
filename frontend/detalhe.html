@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhe do Serviço — Oficina Agenda</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <h1>📋 Detalhes</h1>
+        <span onclick="history.back()" style="cursor:pointer; font-size:1.5rem;">←</span>
+    </header>
+
+    <div class="container">
+
+        <div id="conteudo-detalhe">
+            <div class="loading">Carregando...</div>
+        </div>
+
+    </div>
+
+    <!-- MODAL EDITAR PREVISÃO -->
+    <div class="modal-overlay" id="modal-editar">
+        <div class="modal">
+            <h3>Editar Serviço</h3>
+            <div class="form-group">
+                <label>Tipo de serviço</label>
+                <select id="edit-tipo">
+                    <option value="Pintura total">Pintura total</option>
+                    <option value="Funilaria">Funilaria</option>
+                    <option value="Polimento">Polimento</option>
+                    <option value="Limpeza simples">Limpeza simples</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Previsão de entrega</label>
+                <input type="date" id="edit-previsao">
+            </div>
+            <div class="form-group">
+                <label>Observações</label>
+                <textarea id="edit-observacoes"></textarea>
+            </div>
+            <div class="botoes-acao">
+                <button class="btn-primary" onclick="salvarEdicao()">Salvar</button>
+                <button class="btn-secondary" onclick="fecharModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVEGAÇÃO INFERIOR -->
+    <nav class="nav-bottom">
+        <a href="index.html" class="nav-item">
+            <span>🏠</span>
+            Início
+        </a>
+        <a href="servicos.html" class="nav-item ativo">
+            <span>🔧</span>
+            Serviços
+        </a>
+        <a href="clientes.html" class="nav-item">
+            <span>👥</span>
+            Clientes
+        </a>
+    </nav>
+
+    <script src="js/config.js"></script>
+    <script src="js/detalhe.js"></script>
+
+</body>
+</html>
