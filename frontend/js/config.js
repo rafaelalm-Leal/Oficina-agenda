@@ -1,11 +1,7 @@
-const API_URL = "http://127.0.0.1:8000";
-
-const TIPOS_SERVICO = [
-    "Pintura total",
-    "Funilaria", 
-    "Polimento",
-    "Limpeza simples"
-];
+const API_URL = window.location.hostname === "127.0.0.1" || 
+                window.location.hostname === "localhost"
+    ? "http://127.0.0.1:8000"
+    : "https://SEU-BACKEND.onrender.com";
 
 const STATUS_LABEL = {
     agendado: "Agendado",
