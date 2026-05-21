@@ -6,6 +6,13 @@
     <title>Clientes — Oficina Agenda</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
+<script>
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/service-worker.js");
+    }
+</script>
+
 <body>
 
     <header class="header">
