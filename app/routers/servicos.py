@@ -10,8 +10,7 @@ LIMITE_SERVICOS_ATIVOS = 4
 
 def contar_servicos_ativos(db: Session) -> int:
     return db.query(models.Servico).filter(
-        models.Servico.status.in_([
-            StatusServico.agendado,
+        models.Servico.status([
             StatusServico.em_andamento
         ])
     ).count()
@@ -19,14 +18,33 @@ def contar_servicos_ativos(db: Session) -> int:
 # LISTAR TODOS
 @router.get("/", response_model=list[schemas.ServicoResponse])
 def listar_servicos(db: Session = Depends(get_db)):
-    return db.query(models.Servico).order_by(models.Servico.previsao_entrega).all()
+    from sqlalchemy import case
+
+    ordem_status = case(
+        (models.Servico.status == StatusServico.em_andamento, 1),
+        (models.Servico.status == StatusServico.agendado, 2),
+        (models.Servico.status == StatusServico.concluido, 3),
+        (models.Servico.status == StatusServico.cancelado, 4),
+        else_=5
+    )
+
+    return db.query(models.Servico).order_by(
+        ordem_status,
+        models.Servico.previsao_entrega
+    ).all()
 
 # LISTAR POR STATUS
 @router.get("/status/{status}", response_model=list[schemas.ServicoResponse])
 def listar_por_status(status: StatusServico, db: Session = Depends(get_db)):
+    ordem = (
+        models.Servico.data_entrada
+        if status == StatusServico.agendado
+        else models.Servico.previsao_entrega
+    )
+
     return db.query(models.Servico).filter(
         models.Servico.status == status
-    ).order_by(models.Servico.previsao_entrega).all()
+    ).order_by(ordem).all()
 
 # DASHBOARD
 @router.get("/dashboard/resumo")
@@ -34,20 +52,22 @@ def resumo_dashboard(db: Session = Depends(get_db)):
     agendados = db.query(models.Servico).filter(
         models.Servico.status == StatusServico.agendado
     ).count()
+
     em_andamento = db.query(models.Servico).filter(
         models.Servico.status == StatusServico.em_andamento
     ).count()
+
     concluidos = db.query(models.Servico).filter(
         models.Servico.status == StatusServico.concluido
     ).count()
-    ativos = agendados + em_andamento
-    lotado = ativos >= LIMITE_SERVICOS_ATIVOS
+
+    lotado = em_andamento >= LIMITE_SERVICOS_ATIVOS
 
     return {
         "agendados": agendados,
         "em_andamento": em_andamento,
         "concluidos": concluidos,
-        "slots_usados": ativos,
+        "slots_usados": em_andamento,
         "slots_total": LIMITE_SERVICOS_ATIVOS,
         "lotado": lotado
     }
@@ -63,20 +83,29 @@ def buscar_servico(servico_id: int, db: Session = Depends(get_db)):
 # CRIAR SERVIÇO
 @router.post("/", response_model=schemas.ServicoResponse, status_code=201)
 def criar_servico(servico: schemas.ServicoCreate, db: Session = Depends(get_db)):
-    ativos = contar_servicos_ativos(db)
-    if ativos >= LIMITE_SERVICOS_ATIVOS:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Limite de {LIMITE_SERVICOS_ATIVOS} serviços ativos atingido."
-        )
     if not servico.tipos_ids:
         raise HTTPException(status_code=400, detail="Selecione ao menos um tipo de serviço.")
+
+    from datetime import date
+    hoje = date.today()
+    slots_em_andamento = contar_servicos_ativos(db)
+
+    if servico.data_entrada == hoje and slots_em_andamento < LIMITE_SERVICOS_ATIVOS:
+        status_inicial = StatusServico.em_andamento
+    elif servico.data_entrada == hoje and slots_em_andamento >= LIMITE_SERVICOS_ATIVOS:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Oficina lotada! As {LIMITE_SERVICOS_ATIVOS} vagas físicas estão ocupadas."
+        )
+    else:
+        status_inicial = StatusServico.agendado
 
     novo = models.Servico(
         cliente_id=servico.cliente_id,
         observacoes=servico.observacoes,
         data_entrada=servico.data_entrada,
-        previsao_entrega=servico.previsao_entrega
+        previsao_entrega=servico.previsao_entrega,
+        status=status_inicial
     )
     db.add(novo)
     db.flush()
@@ -84,9 +113,8 @@ def criar_servico(servico: schemas.ServicoCreate, db: Session = Depends(get_db))
     for tipo_id in servico.tipos_ids:
         tipo = db.query(models.TipoServico).filter(models.TipoServico.id == tipo_id).first()
         if not tipo:
-            raise HTTPException(status_code=404, detail=f"Tipo de serviço {tipo_id} não encontrado")
-        item = models.ItemServico(servico_id=novo.id, tipo_servico_id=tipo_id)
-        db.add(item)
+            raise HTTPException(status_code=404, detail=f"Tipo {tipo_id} não encontrado")
+        db.add(models.ItemServico(servico_id=novo.id, tipo_servico_id=tipo_id))
 
     db.commit()
     db.refresh(novo)

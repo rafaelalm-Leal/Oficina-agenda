@@ -31,7 +31,7 @@ function renderizarSlots(dados) {
     const alerta = document.getElementById("alerta-lotado");
 
     barra.innerHTML = "";
-    texto.textContent = `${dados.slots_usados}/${dados.slots_total} slots`;
+    texto.textContent = `${dados.slots_usados}/${dados.slots_total} na oficina agora`;
 
     for (let i = 0; i < dados.slots_total; i++) {
         const slot = document.createElement("div");
@@ -46,6 +46,14 @@ function renderizarSlots(dados) {
 
     if (dados.lotado) {
         alerta.style.display = "block";
+        alerta.textContent = "⚠️ Oficina lotada! Conclua um serviço para liberar uma vaga.";
+    } else {
+        alerta.style.display = "none";
+    }
+
+    const numSlots = document.getElementById("num-slots");
+    if (numSlots) {
+        numSlots.textContent = dados.slots_total - dados.slots_usados;
     }
 }
 
